@@ -8,13 +8,13 @@ import com.khowal.dto.UserDTO;
 
 public interface UserService {
 
-	public UserDTO login(UserDTO dto);
+	public UserDTO login(String email, String password);
 
 	public Map<Integer, String> getCountries();
 
-	public Map<Integer, String> getStatesByCountry(String countryName);
+	public Map<Integer, String> getStates(Integer countryId);
 
-	public Map<Integer, String> getCitiesByState(String stateName);
+	public Map<Integer, String> getCities(Integer stateId);
 	
 	public boolean isEmailUnique(String email);
 	

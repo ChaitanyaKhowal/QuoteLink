@@ -6,7 +6,8 @@ import lombok.Data;
 public class PasswordDTO {
 
 	private String email;
-	private String password;
-	private String updatedPassword;
+	private String oldPassword;
+	private String newPassword;
+	private String confirmPassword;
 
 }

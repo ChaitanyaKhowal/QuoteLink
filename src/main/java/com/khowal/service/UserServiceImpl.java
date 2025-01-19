@@ -3,10 +3,13 @@ package com.khowal.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.khowal.dto.PasswordDTO;
 import com.khowal.dto.QuoteResponseDTO;
@@ -35,86 +38,140 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private CityRepo cityRepo;
 
+	@Autowired
+	private EmailService emailService;
+
 	@Override
-	public UserDTO login(UserDTO dto) {
-		UserDTO byEmailAndPassword = userRepo.findByEmailAndPassword(dto.getEmail(), dto.getPassword());
-		if (byEmailAndPassword != null) {
-			return byEmailAndPassword;
-		} else {
-			return null;
+	public UserDTO login(String email, String password) {
+		UserEntity entity = userRepo.findByEmailAndPassword(email, password);
+		if (entity != null) {
+			UserDTO userDTO = new UserDTO();
+			BeanUtils.copyProperties(entity, userDTO);
+			return userDTO;
 		}
+		return null;
 	}
 
 	@Override
 	public Map<Integer, String> getCountries() {
-		Map<Integer, String> countriesMap = new HashMap<>();
-		List<CountryTable> countries = countryRepo.findAll();
-		for (CountryTable countryTable : countries) {
-			countriesMap.put(countryTable.getCountryId(), countryTable.getCountryName());
-		}
-		return countriesMap;
+		List<CountryTable> list = countryRepo.findAll();
+		Map<Integer, String> countryMap = new HashMap<>();
+		list.forEach(country -> {
+			countryMap.put(country.getCountryId(), country.getCountryName());
+		});
+		return countryMap;
 	}
 
 	@Override
-	public Map<Integer, String> getStatesByCountry(String countryName) {
-		Map<Integer, String> statesMap = new HashMap<>();
-		CountryTable country = countryRepo.findByCountry(countryName);
-		if (country != null) {
-			List<StateTable> states = stateRepo.findByCountry(country);
-			for (StateTable state : states) {
-				statesMap.put(state.getStateId(), state.getStateName());
-			}
-		}
-		return statesMap;
+	public Map<Integer, String> getStates(Integer countryId) {
+		List<StateTable> list = stateRepo.findByCountryCountryId(countryId);
+		Map<Integer, String> stateMap = new HashMap<>();
+		list.forEach(states -> {
+			stateMap.put(states.getStateId(), states.getStateName());
+		});
+		return stateMap;
 	}
 
 	@Override
-	public Map<Integer, String> getCitiesByState(String stateName) {
-		Map<Integer, String> citiesMap = new HashMap<>();
-		List<CityTable> cities = cityRepo.findAll();
-		for (CityTable cityTable : cities) {
-			citiesMap.put(cityTable.getCityId(), cityTable.getCityName());
-		}
-		return citiesMap;
+	public Map<Integer, String> getCities(Integer stateId) {
+		List<CityTable> list = cityRepo.findByStateStateId(stateId);
+		Map<Integer, String> cityMap = new HashMap<>();
+		list.forEach(city -> {
+			cityMap.put(city.getCityId(), city.getCityName());
+		});
+		return cityMap;
 	}
 
 	@Override
 	public boolean isEmailUnique(String email) {
-		UserDTO byEmail = userRepo.findByEmail(email);
+		UserEntity byEmail = userRepo.findByEmail(email);
 		return byEmail == null;
-	}
-
-	public String generateRandomPassword() {
-//		String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$";
-//		int passwordLength = 12;
-//		SecureRandom secureRandom = new SecureRandom();
-//		StringBuilder password = new StringBuilder();
-//		for (int i = 0; i < passwordLength; i++) {
-//			int nextInt = secureRandom.nextInt(allowedChars.length());
-//			password.append(allowedChars.charAt(nextInt));
-//		}
-		return null;
 	}
 
 	@Override
 	public boolean register(UserDTO userDto) {
-		String random = generateRandomPassword();
-		userDto.setPassword(random);
-		UserEntity userEntity = new UserEntity();
-		BeanUtils.copyProperties(userDto, userEntity);
-		UserEntity save = userRepo.save(userEntity);
-		return save != null;
+		UserEntity entity = new UserEntity();
+		BeanUtils.copyProperties(userDto, entity);
+
+		String randomPassword = generateRandomPassword();
+		entity.setPassword(randomPassword);
+		entity.setUpdatedPassword("NO");
+
+		CountryTable country = countryRepo.findById(userDto.getCountryId()).get();
+		entity.setCountry(country);
+
+		StateTable state = stateRepo.findById(userDto.getStateId()).get();
+		entity.setState(state);
+
+		CityTable city = cityRepo.findById(userDto.getCityId()).get();
+		entity.setCity(city);
+
+		UserEntity saved = userRepo.save(entity);
+
+		if (saved != null) {
+			String subject = "Registration Saved Successfully";
+			String body = "<html><body>" + "<h2 style='color: #4CAF50;'>Welcome to Our Service!</h2>"
+					+ "<p>Dear <strong>" + userDto.getName() + "</strong>,</p>"
+					+ "<p>Thank you for registering with us. We are excited to have you on board!</p>"
+					+ "<p>Your registration was successful, and your password has been generated:</p>"
+					+ "<div style='padding: 15px; background-color: #f4f4f4; border-radius: 5px; font-size: 18px; font-weight: bold; color: #333;'>"
+					+ "<strong>" + randomPassword + "</strong>" + "</div>"
+					+ "<p>If you did not request this registration, please ignore this email.</p>"
+					+ "<p>For any questions or support, feel free to contact us.</p>" + "<br>"
+					+ "<p style='font-size: 14px; color: #777;'>Best regards,<br>The <strong>[Your Company]</strong> Team</p>"
+					+ "<p>For any inquiries, feel free to reach us at: <a href='mailto:chiragkhowal300@gmail.com'>chiragkhowal300@gmail.com</a></p>"
+					+ "<br><hr>" + "<footer>" + "<div style='text-align: center; padding-top: 20px;'>"
+					+ "<div class='footerContainer' style='padding-bottom: 10px;'>" + "</div>"
+					+ "<div class='footerBottom' style='font-size: 14px; color: #777;'>"
+					+ "<p>Thanks for visiting! Feel free to connect with me.</p>"
+					+ "<p>Designer |<span style='font-weight: bold;'> Chaitanya Khowal</span></p>"
+					+ "<p>Copyright &copy;2025;</p>" + "</div>" + "</div>" + "</footer>" + "</body></html>";
+
+			emailService.sendEmail(userDto.getEmail(), subject, body);
+		}
+
+		return true;
 	}
 
 	@Override
 	public boolean resetPassword(PasswordDTO passwordDto) {
-		return false;
+		UserEntity entity = userRepo.findByEmail(passwordDto.getEmail());
+
+		entity.setPassword(passwordDto.getNewPassword());
+		entity.setUpdatedPassword("YES");
+
+		UserEntity saved = userRepo.save(entity);
+
+		return saved != null;
 	}
 
 	@Override
 	public QuoteResponseDTO getQuotation() {
-		// TODO Auto-generated method stub
-		return null;
+
+		String apiUrl = "https://dummyjson.com/quotes/random";
+
+		RestTemplate rt = new RestTemplate();
+		ResponseEntity<QuoteResponseDTO> forEntity = rt.getForEntity(apiUrl, QuoteResponseDTO.class);
+
+		return forEntity.getBody();
+
+	}
+
+	private String generateRandomPassword() {
+		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+		StringBuilder password = new StringBuilder();
+
+		Random random = new Random();
+
+		for (int i = 0; i < 5; i++) {
+			int index = (int) (random.nextFloat() * chars.length());
+			password.append(chars.charAt(index));
+		}
+
+		String save = password.toString();
+
+		return save;
 	}
 
 }

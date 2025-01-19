@@ -11,8 +11,8 @@ public class UserDTO {
 	private String phoneNo;
 	private String password;
 	private String updatedPassword;
-	private String country;
-	private String state;
-	private String city;
+	private Integer countryId;
+	private Integer stateId;
+	private Integer cityId;
 
 }
