@@ -2,236 +2,245 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Registration Page</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-		integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<style>
-		/* Footer */
-		footer {
-			position: fixed;
-			bottom: 0;
-			width: 100%;
-			background-color: #ff7e5f;
-			color: white;
-			padding: 20px;
-			text-align: center;
-		}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #333;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
 
-		.footerContainer {
-			display: flex;
-			justify-content: center;
-		}
+        .container {
+            background: #fff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
 
-		.socialIcons {
-			display: flex;
-		}
+        .container:hover {
+            transform: translateY(0px);
+        }
 
-		.socialIcons a {
-			text-decoration: none;
-			padding: 10px;
-			background-color: white;
-			border-radius: 50%;
-			margin: 10px;
-		}
+        h1 {
+            text-align: center;
+            color: #2575fc;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
 
-		.socialIcons a i {
-			font-size: 2em;
-			color: black;
-			opacity: 0.9;
-		}
+        table {
+            width: 100%;
+            border-spacing: 15px;
+        }
 
-		.socialIcons a:hover {
-			background-color: #111;
-			transition: 0.5s;
-		}
+        td {
+            padding: 10px 0;
+        }
 
-		.socialIcons a:hover i {
-			color: white;
-			transition: 0.5s;
-		}
+        td:first-child {
+            font-weight: bold;
+            color: #555;
+        }
 
-		.footerBottom {
-			padding-top: 10px;
-			font-size: 1rem;
-		}
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
 
-		#backToTopButton {
-			position: fixed;
-			bottom: 80px;
-			right: 20px;
-			background-color: rgba(51, 51, 51, 0.6);
-			color: #fff;
-			border: none;
-			border-radius: 50%;
-			width: 50px;
-			height: 50px;
-			font-size: 18px;
-			text-align: center;
-			line-height: 50px;
-			cursor: pointer;
-			box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-			transition: background-color 0.3s ease, opacity 0.3s ease;
-			opacity: 0.4;
-		}
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            border: 1px solid #2575fc;
+            box-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
+        }
 
-		#backToTopButton:hover {
-			background-color: #555;
-			opacity: 1;
-		}
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #2575fc;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-		/* Footer Styling */
-		footer {
-			position: fixed;
-			bottom: 0;
-			width: 100%;
-			background-color: #ff7e5f;
-			/* Set footer background color */
-			color: white;
-			padding: 20px;
-			text-align: center;
-		}
-	</style>
-	<script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+        input[type="submit"]:hover {
+            background: #6a11cb;
+        }
 
-	<script>
-		$(document).ready(function () {
-			$("#countryId").on("change", function () {
-				var countryId = $("#countryId").val();
-				$('#stateId').find('option').remove();
-				$('<option>').val('').text('-Select-').appendTo("#stateId");
+        a {
+            color: #2575fc;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
 
-				$('#cityId').find('option').remove();
-				$('<option>').val('').text('-Select-').appendTo("#cityId");
+        a:hover {
+            text-decoration: underline;
+        }
 
-				$.ajax({
-					type: 'GET',
-					url: '/states/' + countryId,
-					success: function (response) {
-						$.each(response, function (key, value) {
-							$('<option>').val(key).text(value).appendTo("#stateId");
-						});
-					}
-				});
-			});
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #2575fc;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
 
-			$("#stateId").on("change", function () {
-				var stateId = $("#stateId").val();
-				$('#cityId').find('option').remove();
-				$('<option>').val('').text('-Select-').appendTo("#cityId");
+        .footerContainer {
+            display: flex;
+            justify-content: center;
+        }
 
-				$.ajax({
-					type: 'GET',
-					url: '/cities/' + stateId,
-					success: function (response) {
-						$.each(response, function (key, value) {
-							$('<option>').val(key).text(value).appendTo("#cityId");
-						});
-					}
-				});
-			});
-		});
-	</script>
+        .socialIcons {
+            display: flex;
+        }
+
+        .socialIcons a {
+            text-decoration: none;
+            padding: 10px;
+            background-color: white;
+            border-radius: 50%;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+
+        .socialIcons a i {
+            font-size: 1.5em;
+            color: black;
+            opacity: 0.8;
+        }
+
+        .socialIcons a:hover {
+            background-color: #111;
+            transform: scale(1.1);
+        }
+
+        .socialIcons a:hover i {
+            color: white;
+        }
+
+        .footerBottom {
+            padding-top: 10px;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 
 <body>
 
-	<div class="container mt-5 mb-5">
+    <div class="container mt-5 mb-5">
+        <h1>Register Here</h1>
 
-		<h1>Register Here</h1>
+        <form th:action="@{/register}" th:object="${user}" method="POST">
+            <font color="red">
+                <p th:text="${error}"></p>
+            </font>
+            <font color="green">
+                <p th:text="${success}"></p>
+            </font>
 
-		<form th:action="@{/register}" th:object="${user}" method="POST">
+            <table>
+                <tr>
+                    <td>Name :</td>
+                    <td><input type="text" th:field="*{name}" required /></td>
+                </tr>
+                <tr>
+                    <td>Email :</td>
+                    <td><input type="text" th:field="*{email}" required /></td>
+                </tr>
+                <tr>
+                    <td>Phno :</td>
+                    <td><input type="number" th:field="*{phoneNo}" required /></td>
+                </tr>
+                <tr>
+                    <td>Country :</td>
+                    <td>
+                        <select th:field="*{countryId}">
+                            <option value="">-Select-</option>
+                            <option th:each="entry : ${countries.entrySet()}" th:value="${entry.key}" th:text="${entry.value}">
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>State :</td>
+                    <td>
+                        <select th:field="*{stateId}">
+                            <option value="">-Select-</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>City :</td>
+                    <td>
+                        <select th:field="*{cityId}">
+                            <option value="">-Select-</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Register" class="btn btn-primary" /></td>
+                </tr>
+                <tr>
+                    <td>Already have an account?</td>
+                    <td><a href="/">Login</a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
-			<font color="red">
-				<p th:text="${error}"></p>
-			</font>
-			<font color="green">
-				<p th:text="${success}"></p>
-			</font>
+    <footer>
+        <div class="footerContainer">
+            <div class="socialIcons">
+                <a href="tel:+917620085558"><i class="fa-solid fa-phone"></i></a>
+                <a href="mailto:chaitanyakhowal8@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/chaitanya-khowal-331b47272/"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://github.com/ChaitanyaKhowal"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.instagram.com/devil_since.2001/"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
 
-			<table>
+        <div class="footerBottom">
+            <p>Thanks for visiting! Feel free to connect with me.</p>
+            <p>Designer | <span class="designer">Chaitanya Khowal</span></p>
+            <p>Copyright &copy;2025;</p>
+        </div>
+    </footer>
 
-				<tr>
-					<td>Name : </td>
-					<td><input type="text" th:field="*{name}" required /></td>
-				</tr>
-				<tr>
-					<td>Email : </td>
-					<td><input type="text" th:field="*{email}" required /></td>
-				</tr>
-				<tr>
-					<td>Phno : </td>
-					<td><input type="number" th:field="*{phoneNo}" required /></td>
-				</tr>
-				<tr>
-					<td>Country : </td>
-					<td>
-						<select th:field="*{countryId}">
-							<option value="">-Select-</option>
-							<option th:each="entry : ${countries.entrySet()}" th:value="${entry.key}"
-								th:text="${entry.value}">
-							</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>State : </td>
-					<td>
-						<select th:field="*{stateId}">
-							<option value="">-Select-</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>City : </td>
-					<td>
-						<select th:field="*{cityId}">
-							<option value="">-Select-</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td> </td>
-					<td><input type="submit" value="Register" class="btn btn-primary" /></td>
-				</tr>
-				<tr>
-					<td>Already have an account?</td>
-					<td><a href="/">Login</a></td>
-				</tr>
-			</table>
-
-		</form>
-
-	</div>
-	<footer>
-		<div class="footerContainer">
-			<div class="socialIcons">
-				<a href="tel:+917620085558"><i class="fa-solid fa-phone"></i></a>
-				<a href="mailto:chaitanyakhowal8@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-				<a href="https://www.linkedin.com/in/chaitanya-khowal-331b47272/"><i
-						class="fa-brands fa-linkedin"></i></a>
-				<a href="https://github.com/ChaitanyaKhowal"><i class="fa-brands fa-github"></i></a>
-				<a href="https://www.instagram.com/devil_since.2001/"><i class="fa-brands fa-instagram"></i></a>
-			</div>
-		</div>
-
-		<div class="footerBottom">
-			<p>Thanks for visiting! Feel free to connect with me.</p>
-			<p>Designer |<span class="designer">Chaitanya Khowal</span></p>
-			<p>Copyright &copy;2025;</p>
-		</div>
-
-		<a href="#top" id="backToTopButton" title="Go to top">&#8679; Top</a>
-	</footer>
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-		crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

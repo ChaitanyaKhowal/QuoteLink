@@ -98,9 +98,7 @@ public class UserController {
 		if (login == null) {
 			model.addAttribute("error", "Old password is incorrect");
 			return "resetPassword";
-
 		}
-
 		if (passDto.getNewPassword().equals(passDto.getConfirmPassword())) {
 			userService.resetPassword(passDto);
 			QuoteResponseDTO quotation = userService.getQuotation();

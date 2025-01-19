@@ -13,12 +13,102 @@
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 	<style>
-		/* Footer */
+		body {
+			font-family: 'Poppins', sans-serif;
+			background: linear-gradient(to right, #6a11cb, #2575fc);
+			color: #333;
+			height: 70vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+		}
+
+		.container {
+			background: #fff;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+			border-radius: 10px;
+			padding: 40px;
+			width: 100%;
+			max-width: 415px;
+			transform: translateY(20px);
+			transition: transform 0.3s ease;
+		}
+
+		.container:hover {
+			transform: translateY(0px);
+		}
+
+		h1 {
+			text-align: center;
+			color: #2575fc;
+			margin-bottom: 30px;
+			font-size: 2rem;
+		}
+
+		table {
+			width: 100%;
+			border-spacing: 15px;
+		}
+
+		td {
+			padding: 10px 0;
+		}
+
+		td:first-child {
+			font-weight: bold;
+			color: #555;
+		}
+
+		input[type="email"],
+		input[type="password"] {
+			width: 100%;
+			padding: 12px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			box-sizing: border-box;
+			font-size: 1rem;
+			transition: border 0.3s;
+		}
+
+		input[type="email"]:focus,
+		input[type="password"]:focus {
+			border: 1px solid #2575fc;
+			box-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
+		}
+
+		input[type="submit"] {
+			width: 100%;
+			padding: 12px;
+			border: none;
+			border-radius: 5px;
+			background: #2575fc;
+			color: white;
+			font-size: 1.1rem;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+		input[type="submit"]:hover {
+			background: #6a11cb;
+		}
+
+		a {
+			color: #2575fc;
+			text-decoration: none;
+			font-size: 0.95rem;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
 		footer {
 			position: fixed;
 			bottom: 0;
 			width: 100%;
-			background-color: #ff7e5f;
+			background-color: #2575fc;
 			color: white;
 			padding: 20px;
 			text-align: center;
@@ -39,70 +129,34 @@
 			background-color: white;
 			border-radius: 50%;
 			margin: 10px;
+			transition: all 0.3s;
 		}
 
 		.socialIcons a i {
-			font-size: 2em;
+			font-size: 1.5em;
 			color: black;
-			opacity: 0.9;
+			opacity: 0.8;
 		}
 
 		.socialIcons a:hover {
 			background-color: #111;
-			transition: 0.5s;
+			transform: scale(1.1);
 		}
 
 		.socialIcons a:hover i {
 			color: white;
-			transition: 0.5s;
 		}
 
 		.footerBottom {
 			padding-top: 10px;
-			font-size: 1rem;
-		}
-
-		#backToTopButton {
-			position: fixed;
-			bottom: 80px;
-			right: 20px;
-			background-color: rgba(51, 51, 51, 0.6);
-			color: #fff;
-			border: none;
-			border-radius: 50%;
-			width: 50px;
-			height: 50px;
-			font-size: 18px;
-			text-align: center;
-			line-height: 50px;
-			cursor: pointer;
-			box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-			transition: background-color 0.3s ease, opacity 0.3s ease;
-			opacity: 0.4;
-		}
-
-		#backToTopButton:hover {
-			background-color: #555;
-			opacity: 1;
-		}
-
-		/* Footer Styling */
-		footer {
-			position: fixed;
-			bottom: 0;
-			width: 100%;
-			background-color: #ff7e5f;
-			/* Set footer background color */
-			color: white;
-			padding: 20px;
-			text-align: center;
+			font-size: 0.9rem;
 		}
 	</style>
 
 </head>
 
 <body>
-	<div class="container mt-5 mb-5">
+	<div class="container">
 		<h1>Login here</h1>
 		<form th:action="@{/login}" th:object="${user}" method="post">
 			<font color="red">
@@ -122,7 +176,7 @@
 					<td><input type="submit" value="Login" class="btn btn-primary"></td>
 				</tr>
 				<tr>
-					<td>Don't have an acount ?</td>
+					<td>Don't have an account?</td>
 					<td><a href="register">Register</a></td>
 				</tr>
 			</table>
@@ -142,11 +196,10 @@
 
 		<div class="footerBottom">
 			<p>Thanks for visiting! Feel free to connect with me.</p>
-			<p>Designer |<span class="designer">Chaitanya Khowal</span></p>
+			<p>Designer | <span class="designer">Chaitanya Khowal</span></p>
 			<p>Copyright &copy;2025;</p>
 		</div>
 
-		<a href="#top" id="backToTopButton" title="Go to top">&#8679; Top</a>
 	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
