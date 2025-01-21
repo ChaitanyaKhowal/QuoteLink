@@ -30,45 +30,59 @@
 			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 			border-radius: 10px;
 			padding: 40px;
-			width: 100%;
+			width: auto;
 			max-width: 1000px;
 			transform: translateY(20px);
 			transition: transform 0.3s ease;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 		}
 
-		.container:hover {
-			transform: translateY(0px);
-		}
-
-		h1 {
-			text-align: center;
-			color: #2575fc;
-			margin-bottom: 30px;
-			font-size: 2rem;
-		}
-
-		table {
+		.navbar {
+			background: linear-gradient(to right, #6a11cb, #2575fc);
+			padding: 10px 20px;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+			position: fixed;
+			top: 0;
 			width: 100%;
-			border-spacing: 15px;
+			z-index: 1000;
 		}
 
-		td {
-			padding: 10px 0;
+		.navbar .navbar-brand {
+			color: #fff;
+			font-size: 1.5rem;
+			font-weight: 700;
+			text-decoration: none;
 		}
 
-		td:first-child {
-			font-weight: bold;
-			color: #555;
+		.navbar .nav-link {
+			color: #fff;
+			font-size: 1rem;
+			margin: 0 10px;
+			transition: color 0.3s;
+		}
+
+		.navbar .nav-link:hover {
+			color: #ffeb3b;
+		}
+
+		.button-container {
+			display: flex;
+			justify-content: center;
+			gap: 10px;
+			margin-top: 20px;
 		}
 
 		footer {
 			position: fixed;
 			bottom: 0;
 			width: 100%;
-			background-color: #2575fc;
+			background: linear-gradient(to right, #6a11cb, #2575fc);
 			color: white;
 			padding: 20px;
 			text-align: center;
+			box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
 		}
 
 		.footerContainer {
@@ -108,11 +122,43 @@
 			padding-top: 10px;
 			font-size: 0.9rem;
 		}
-	</style>
 
+		.container:hover {
+			transform: translateY(0px);
+		}
+
+		h1 {
+			text-align: center;
+			color: #2575fc;
+			margin-bottom: 30px;
+			font-size: 2rem;
+		}
+
+		table {
+			width: 100%;
+			border-spacing: 15px;
+		}
+
+		td {
+			padding: 10px 0;
+		}
+
+		td:first-child {
+			font-weight: bold;
+			color: #555;
+		}
+	</style>
 </head>
 
 <body>
+	<nav class="navbar">
+		<a class="navbar-brand" href="#">QuoteLink</a>
+		<div class="d-flex">
+			<a class="nav-link" href="/resetPassword">Reset Password</a>
+			<a class="nav-link" href="/">Logout</a>
+		</div>
+	</nav>
+
 	<div class="container">
 		<h1>Dashboard Page</h1>
 		<table>
@@ -125,9 +171,11 @@
 				<td th:text="${quote.author}"></td>
 			</tr>
 		</table>
-		<a href="getQuote" class="btn btn-primary">Get New Quote</a>
 
-		<a href="/" class="btn btn-danger">Logout</a>
+		<div class="button-container">
+			<a href="getQuote" class="btn btn-primary">Get New Quote</a>
+			<a href="/" class="btn btn-danger">Logout</a>
+		</div>
 	</div>
 
 	<footer>
@@ -141,15 +189,12 @@
 				<a href="https://www.instagram.com/devil_since.2001/"><i class="fa-brands fa-instagram"></i></a>
 			</div>
 		</div>
-
 		<div class="footerBottom">
 			<p>Thanks for visiting! Feel free to connect with me.</p>
 			<p>Designer | <span class="designer">Chaitanya Khowal</span></p>
 			<p>Copyright &copy;2025;</p>
 		</div>
-
 	</footer>
-
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous"></script>

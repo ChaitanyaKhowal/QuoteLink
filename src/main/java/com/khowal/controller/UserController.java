@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.khowal.dto.PasswordDTO;
 import com.khowal.dto.QuoteResponseDTO;
 import com.khowal.dto.UserDTO;
+import com.khowal.entity.UserEntity;
+import com.khowal.repository.UserRepo;
 import com.khowal.service.UserService;
 
 @Controller
@@ -21,6 +23,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserRepo userRepo;
 
 	@GetMapping("/")
 	public String loadPage(Model model) {
@@ -92,22 +96,29 @@ public class UserController {
 
 	@PostMapping("/resetPassword")
 	public String resetPassword(@ModelAttribute("passDto") PasswordDTO passDto, Model model) {
+		UserEntity byEmail = userRepo.findByEmail(passDto.getEmail().trim());
 
-		UserDTO login = userService.login(passDto.getEmail(), passDto.getOldPassword());
-
-		if (login == null) {
-			model.addAttribute("error", "Old password is incorrect");
-			return "resetPassword";
-		}
-		if (passDto.getNewPassword().equals(passDto.getConfirmPassword())) {
-			userService.resetPassword(passDto);
-			QuoteResponseDTO quotation = userService.getQuotation();
-			model.addAttribute("quote", quotation);
-			return "dashboard";
+		if (byEmail != null && byEmail.getPassword().equals(passDto.getOldPassword())) {
+		    if (passDto.getNewPassword().equals(passDto.getConfirmPassword())) {
+		        userService.resetPassword(passDto);
+		        QuoteResponseDTO quotation = userService.getQuotation();
+		        model.addAttribute("quote", quotation);
+		        return "dashboard";
+		    } else {
+		        PasswordDTO password = new PasswordDTO();
+		        password.setEmail(byEmail.getEmail());
+		        model.addAttribute("resetPassword", password);
+		        model.addAttribute("error", "New password doesn't match the confirm password");
+		        return "resetPassword";
+		    }
 		} else {
-			model.addAttribute("error", "New password doesn't matched with the confirm pasword");
-			return "resetPassword";
+		    PasswordDTO password = new PasswordDTO();
+		    password.setEmail(passDto.getEmail());
+		    model.addAttribute("resetPassword", password);
+		    model.addAttribute("error", "Old password is incorrect");
+		    return "resetPassword";
 		}
+
 	}
 
 	@GetMapping("/getQuote")

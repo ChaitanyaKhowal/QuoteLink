@@ -40,6 +40,23 @@
 			transform: translateY(0px);
 		}
 
+		.navbar {
+			background: linear-gradient(to right, #6a11cb, #2575fc);
+			padding: 10px 20px;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 1000;
+		}
+
+		.navbar .navbar-brand {
+			color: #fff;
+			font-size: 1.5rem;
+			font-weight: 700;
+			text-decoration: none;
+		}
+
 		h1 {
 			text-align: center;
 			color: #2575fc;
@@ -105,14 +122,15 @@
 		}
 
 		footer {
-			position: fixed;
-			bottom: 0;
-			width: 100%;
-			background-color: #2575fc;
-			color: white;
-			padding: 20px;
-			text-align: center;
-		}
+					position: fixed;
+					bottom: 0;
+					width: 100%;
+					background: linear-gradient(to right, #6a11cb, #2575fc);
+					color: white;
+					padding: 20px;
+					text-align: center;
+					box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+				}
 
 		.footerContainer {
 			display: flex;
@@ -156,6 +174,9 @@
 </head>
 
 <body>
+	<nav class="navbar">
+		<a class="navbar-brand" href="#">QuoteLink</a>
+	</nav>
 	<div class="container">
 		<h1>Login here</h1>
 		<form th:action="@{/login}" th:object="${user}" method="post">
