@@ -158,15 +158,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private String generateRandomPassword() {
-		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 		StringBuilder password = new StringBuilder();
 
 		Random random = new Random();
 
 		for (int i = 0; i < 5; i++) {
-			int index = (int) (random.nextFloat() * chars.length());
-			password.append(chars.charAt(index));
+			int index = (int) (random.nextFloat() * SALTCHARS.length());
+			password.append(SALTCHARS.charAt(index));
 		}
 
 		String save = password.toString();
